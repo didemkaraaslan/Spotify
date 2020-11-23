@@ -1,5 +1,3 @@
-stop them or repeat.
-
 # How to Get Started
 
 ```sh
@@ -12,6 +10,20 @@ $ npm start
 # Note
 
 For app the perform some functionality ( play song ) you must hava a premium account. Otherwise it's alllrighty!
+
+# ScreenShots
+
+## Login Screen
+
+![Login Page](./src/images/login.jpg)
+
+## Spotify Authentication Screen
+
+![Login Page](./src/images/authentication.jpg)
+
+## Dashboard Screen
+
+![Login Page](./src/images/dashboard.jpg)
 
 # A Quote from Dan Abromov
 
