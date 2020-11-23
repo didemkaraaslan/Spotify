@@ -1,0 +1,25 @@
+.option {
+  display: flex;
+  align-items: center;
+  color: grey;
+  height: 40px;
+  cursor: pointer;
+  transition: 200ms color ease-in;
+}
+.icon {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.option:hover {
+  color: white;
+}
+
+.title {
+  margin-top: 10px;
+  margin-left: 20px;
+  font-size: 14px;
+}
+
+.iconTitle {
+}

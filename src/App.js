@@ -1,25 +1,77 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import SpotifyWebApi from "spotify-web-api-js";
+import "./App.css";
+import Login from "./components/auth/Login";
+import Dashboard from "./components/Dashboard";
+import { getTokenFromResponse } from "./spotify/spotify";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import ProtectedRoute from "./components/auth/ProtectedRoute";
+import { useDataLayerValue } from "./context/DataLayer";
 
-function App() {
+const spotify = new SpotifyWebApi();
+
+const App = () => {
+  const [loading, setLoading] = useState(true);
+  const [{ user, token }, dispatch] = useDataLayerValue();
+
+  useEffect(() => {
+    const hash = getTokenFromResponse();
+
+    window.location.hash = "";
+
+    const _token = hash["access_token"];
+    if (_token) {
+      dispatch({ type: "SET_TOKEN", token: _token });
+
+      spotify.setAccessToken(_token);
+      spotify
+        .getMe()
+        .then((user) => {
+          dispatch({ type: "SET_USER", user });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+
+    spotify
+      .getUserPlaylists()
+      .then((playlists) => {
+        console.log(playlists);
+        dispatch({ type: "SET_PLAYLISTS", playlists });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+    spotify
+      .getPlaylist("37i9dQZF1DX9w1Quh8lR7W")
+      .then((response) => {
+        dispatch({ type: "SET_DISCOVER_WEEKLY", discover_weekly: response });
+      })
+      .catch((error) => {});
+
+    setLoading(false);
+  }, []);
+
+  if (loading) return <h1>Loading..</h1>;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Router>
+        <Switch>
+          <ProtectedRoute
+            exact
+            path="/"
+            token={token}
+            component={Dashboard}
+            spotify={spotify}
+          />
+          <Route exact path="/login" component={Login} />
+        </Switch>
+      </Router>
     </div>
   );
-}
+};
 
 export default App;

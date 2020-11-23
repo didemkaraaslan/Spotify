@@ -1,0 +1,57 @@
+.content {
+  height: 100vh;
+  flex: 0.8;
+  background: linear-gradient(rgb(91, 87, 115), rgba(0, 0, 0, 1));
+  color: white;
+  padding-left: 20px;
+  padding-top: 20px;
+  padding-right: 20px;
+  overflow-y: overlay;
+}
+
+.banner {
+  display: flex;
+  align-items: flex-end;
+  padding: 10px;
+}
+
+.bannerText {
+  flex: 1;
+}
+
+.discover {
+  font-size: 48px;
+  margin-bottom: 10px;
+}
+
+.decription {
+  font-size: 14px;
+}
+
+.bannerImage {
+  height: 17vw;
+  margin: 0 20px;
+  box-shadow: 0 40px 60px rgba(0, 0, 0, 0.5);
+}
+
+.songs {
+}
+
+.icons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 147px;
+  margin-left: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.shuffle {
+  font-size: 80px !important;
+}
+
+.shuffle:hover {
+  transition: transform 0.1s ease-in;
+  transform: scale(1.08);
+}

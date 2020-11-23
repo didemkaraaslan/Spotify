@@ -1,0 +1,35 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+}
+
+.left {
+  background-color: white;
+  color: grey;
+  border-radius: 30px;
+  display: flex;
+  flex: 0.6;
+  min-width: 50px;
+  align-items: center;
+  padding: 10px;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  margin-right: 17px;
+}
+
+.search {
+  border: none;
+  width: 100%;
+}
+
+.searchIcon {
+  margin-right: 5px;
+}
+
+.displayName {
+  margin-left: 10px;
+}

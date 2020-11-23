@@ -1,0 +1,30 @@
+.track {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+  padding: 20px;
+}
+
+.track:hover {
+  cursor: pointer;
+  background-color: black;
+  opacity: 0.8;
+}
+
+.album {
+  height: 40px;
+  width: 40px;
+}
+
+.title {
+  font-size: 16px;
+}
+.info {
+  margin-left: 20px;
+}
+
+p {
+  font-size: 14px;
+  margin-top: 3px;
+  color: grey;
+}
