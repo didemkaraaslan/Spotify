@@ -2,9 +2,9 @@ import { StylesProvider } from "@material-ui/core";
 import React from "react";
 import styles from "./track.module.css";
 
-const Track = ({ track }) => {
+const Track = ({ track, playSong }) => {
   return (
-    <div className={styles.track}>
+    <div className={styles.track} onClick={() => playSong(track.id)}>
       <img
         src={track.album.images[0].url}
         alt={"Album Image"}

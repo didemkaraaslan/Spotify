@@ -9,6 +9,45 @@ import styles from "./content.module.css";
 
 const Content = ({ spotify }) => {
   const [{ discover_weekly }, dispatch] = useDataLayerValue();
+
+  const playPlaylist = (id) => {
+    spotify
+      .play({
+        context_uri: `spotify:playlist:37i9dQZEVXcJZyENOWUFo7`,
+      })
+      .then((res) => {
+        spotify.getMyCurrentPlayingTrack().then((r) => {
+          dispatch({
+            type: "SET_ITEM",
+            item: r.item,
+          });
+          dispatch({
+            type: "SET_PLAYING",
+            playing: true,
+          });
+        });
+      });
+  };
+
+  const playSong = (id) => {
+    console.log(id);
+    spotify
+      .play({
+        uris: [`spotify:track:${id}`],
+      })
+      .then((res) => {
+        spotify.getMyCurrentPlayingTrack().then((r) => {
+          dispatch({
+            type: "SET_ITEM",
+            item: r.item,
+          });
+          dispatch({
+            type: "SET_PLAYING",
+            playing: true,
+          });
+        });
+      });
+  };
   return (
     <div className={styles.content}>
       <Header spotify={spotify} />
@@ -27,13 +66,16 @@ const Content = ({ spotify }) => {
 
       <div className={styles.songs}>
         <div className={styles.icons}>
-          <PlayCircleFilledIcon className={styles.shuffle} />
+          <PlayCircleFilledIcon
+            className={styles.shuffle}
+            onClick={playPlaylist}
+          />
           <FavoriteIcon fontSize="large" />
           <MoreHorizIcon />
         </div>
         {/* List of songs */}
         {discover_weekly?.tracks?.items.map((item) => (
-          <Track key={item.id} track={item.track} />
+          <Track key={item.track.id} track={item.track} playSong={playSong} />
         ))}
       </div>
     </div>

@@ -44,6 +44,11 @@ const App = () => {
         console.error(error);
       });
 
+    dispatch({
+      type: "SET_SPOTIFY",
+      spotify,
+    });
+
     spotify
       .getPlaylist("37i9dQZF1DX9w1Quh8lR7W")
       .then((response) => {
@@ -51,8 +56,15 @@ const App = () => {
       })
       .catch((error) => {});
 
+    spotify.getMyTopArtists().then((response) =>
+      dispatch({
+        type: "SET_TOP_ARTISTS",
+        top_artists: response,
+      })
+    );
+
     setLoading(false);
-  }, []);
+  }, [token, dispatch]);
 
   if (loading) return <h1>Loading..</h1>;
 
@@ -60,13 +72,7 @@ const App = () => {
     <div className="app">
       <Router>
         <Switch>
-          <ProtectedRoute
-            exact
-            path="/"
-            token={token}
-            component={Dashboard}
-            spotify={spotify}
-          />
+          <ProtectedRoute exact path="/" token={token} component={Dashboard} />
           <Route exact path="/login" component={Login} />
         </Switch>
       </Router>

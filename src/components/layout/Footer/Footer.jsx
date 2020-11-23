@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import cx from "classnames";
 import PlayCircleOutlineIcon from "@material-ui/icons/PlayCircleOutline";
 import SkipPreviousIcon from "@material-ui/icons/SkipPrevious";
@@ -10,27 +10,101 @@ import PauseCircleOutlineIcon from "@material-ui/icons/PauseCircleOutline";
 import PlaylistPlayIcon from "@material-ui/icons/PlaylistPlay";
 import styles from "./footer.module.css";
 import { Grid, Slider } from "@material-ui/core";
+import { useDataLayerValue } from "../../../context/DataLayer";
 
-const Footer = () => {
+const Footer = ({ spotify }) => {
+  const [{ token, item, playing }, dispatch] = useDataLayerValue();
+
+  useEffect(() => {
+    spotify.getMyCurrentPlaybackState().then((r) => {
+      console.log(r);
+
+      dispatch({
+        type: "SET_PLAYING",
+        playing: r.is_playing,
+      });
+
+      dispatch({
+        type: "SET_ITEM",
+        item: r.item,
+      });
+    });
+  }, []);
+
+  const handlePlayPause = () => {
+    if (playing) {
+      spotify.pause();
+      dispatch({
+        type: "SET_PLAYING",
+        playing: false,
+      });
+    } else {
+      spotify.play();
+      dispatch({
+        type: "SET_PLAYING",
+        playing: true,
+      });
+    }
+  };
+
+  const skipNext = () => {
+    spotify.skipToNext();
+    spotify.getMyCurrentPlayingTrack().then((r) => {
+      dispatch({
+        type: "SET_ITEM",
+        item: r.item,
+      });
+      dispatch({
+        type: "SET_PLAYING",
+        playing: true,
+      });
+    });
+  };
+
+  const skipPrevious = () => {
+    spotify.skipToPrevious();
+    spotify.getMyCurrentPlayingTrack().then((r) => {
+      dispatch({
+        type: "SET_ITEM",
+        item: r.item,
+      });
+      dispatch({
+        type: "SET_PLAYING",
+        playing: true,
+      });
+    });
+  };
+
   return (
     <div className={styles.footer}>
       <div className={styles.left}>
         <img
-          src="https://i.scdn.co/image/ab67616d00004851cece42c5eb2823e9a2a1f1eb"
-          alt=""
+          src={item?.album.images[0].url}
+          alt={item?.name}
           className={styles.albumLogo}
         />
-        <div className={styles.info}>
-          <h4>Yeah!</h4>
-          <p>Usher</p>
-        </div>
+        {item ? (
+          <div className={styles.info}>
+            <h4>{item.name}</h4>
+            <p>{item.artists.map((artist) => artist.name).join(", ")}</p>
+          </div>
+        ) : (
+          <div className={styles.info}>
+            <h4>No song is playing</h4>
+            <p>...</p>
+          </div>
+        )}
       </div>
 
       <div className={styles.center}>
         <ShuffleIcon className={cx(styles.icon, styles.colored)} />
-        <SkipPreviousIcon className={styles.icon} />
-        <PlayCircleOutlineIcon className={styles.icon} fontSize="large" />
-        <SkipNextIcon className={styles.icon} />
+        <SkipPreviousIcon className={styles.icon} onClick={skipNext} />
+        <PlayCircleOutlineIcon
+          className={styles.icon}
+          fontSize="large"
+          onClick={handlePlayPause}
+        />
+        <SkipNextIcon className={styles.icon} onClick={skipPrevious} />
         <RepeatIcon className={cx(styles.icon, styles.colored)} />
       </div>
 

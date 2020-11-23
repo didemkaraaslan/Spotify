@@ -3,8 +3,7 @@ export const initialState = {
   playlists: [],
   playing: false,
   item: null,
-  // token:
-  //   "BQCa5O40fEXtwWHSw0okf6AClTbtr1RNiMIE7KtJKwQCTi4jFz8LRG66m8-HNOndXSHJ9PrBC3O4_3QsvAefO0N2uacoNyt7MhJJJzp5-XPsdDeiEGGKdda66a_ZYm0VqD_2MDz593yxdIy1vFZolc-t1DH2UKQM2KeP7AwtYeLlXh_o",
+  token: null,
 };
 
 const reducer = (state, action) => {
@@ -15,6 +14,29 @@ const reducer = (state, action) => {
         ...state,
         user: action.user,
       };
+    case "SET_PLAYING":
+      return {
+        ...state,
+        playing: action.playing,
+      };
+
+    case "SET_ITEM":
+      return {
+        ...state,
+        item: action.item,
+      };
+    case "SET_TOP_ARTISTS":
+      return {
+        ...state,
+        top_artists: action.top_artists,
+      };
+
+    case "SET_SPOTIFY":
+      return {
+        ...state,
+        spotify: action.spotify,
+      };
+
     case "SET_TOKEN":
       return {
         ...state,
