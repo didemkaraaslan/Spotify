@@ -2,9 +2,10 @@
   position: fixed;
   display: flex;
   justify-content: space-between;
+
   bottom: 0;
   height: 87px;
-  width: 100%;
+  width: 96%;
   background-color: #282828;
   color: white;
   padding: 20px;

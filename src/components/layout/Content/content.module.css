@@ -1,5 +1,6 @@
 .content {
   height: 100vh;
+  width: 100%;
   flex: 0.8;
   background: linear-gradient(rgb(91, 87, 115), rgba(0, 0, 0, 1));
   color: white;
@@ -7,6 +8,7 @@
   padding-top: 20px;
   padding-right: 20px;
   overflow-y: overlay;
+  margin-bottom: 90px;
 }
 
 .banner {
